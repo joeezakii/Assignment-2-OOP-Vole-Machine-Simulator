@@ -1,0 +1,13 @@
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+class RegisterFile {
+    vector<string> registers[16];
+public:
+    string getRegister(int index);
+    void setRegister(int index, string value);
+    void clear();
+};
