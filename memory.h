@@ -8,7 +8,7 @@ using namespace std;
 /// @brief 
 class memory{
 
-  vector<string> cells[256];
+  vector<string> cells;
   public: 
   string getcell( string address);
   void setcell(string address, string value);
