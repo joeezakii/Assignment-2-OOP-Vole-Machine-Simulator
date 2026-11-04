@@ -5,7 +5,7 @@
 using namespace std;
 
 class RegisterFile {
-    vector<string> registers[16];
+    vector<string> registers;
 public:
     string getRegister(int index);
     void setRegister(int index, string value);
