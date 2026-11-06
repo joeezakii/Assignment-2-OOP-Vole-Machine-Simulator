@@ -26,5 +26,5 @@ private:
     bool askExitOrLoadAnother();
 
 public:
-    void run(); 
+    void run();      
 };
