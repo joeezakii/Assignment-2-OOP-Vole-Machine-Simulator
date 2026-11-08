@@ -23,7 +23,7 @@ private:
     void handleRunAtOnce();
     void handleEditRegister();
     void handleEditMemoryCell();
-    bool askExitOrLoadAnother();
+    bool askExitOrLoadAnother(int nextChoice_param);
 
 public:
     void run();      

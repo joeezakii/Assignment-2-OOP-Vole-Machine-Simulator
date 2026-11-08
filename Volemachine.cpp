@@ -2,6 +2,7 @@
 #include "CPU.h"
 #include "Memory.h"
 #include "RegisterFile.h"
+#include <string>
 using namespace std;
 
  bool VoleMachine::loadProgram(string filename, string startAddress) {

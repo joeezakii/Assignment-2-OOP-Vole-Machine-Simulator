@@ -2,6 +2,8 @@
 #include "CPU.h"
 #include "Memory.h"
 #include "RegisterFile.h"
+#include "Screen.h"
+#include "ProgramLoader.h"
 #include <string>
 using namespace std;
 class VoleMachine {

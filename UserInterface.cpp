@@ -1,22 +1,26 @@
 #include "VoleMachine.h"
 #include "CPU.h"
+#include "UserInterface.h"
 #include "Memory.h"
+#include "Screen.h"
 #include <iostream>
 #include <string>
 using namespace std;
-bool flag = true;
-int nextChoice;
-int choice;
-void MainMenu::askExitOrLoadAnother(int nextChoice_param) {
+
+bool MainMenu::askExitOrLoadAnother(int nextChoice_param) {
         if(nextChoice_param == 1) {
             handleLoadProgram();
         } else if(nextChoice_param == 2) {
-            flag = false;
             cout << "Exiting the simulator. Goodbye!" << '\n';
-        } 
+            return false;
+        }
+        return true;
 };
 
 void MainMenu::run() {
+bool flag = true;
+int nextChoice;
+int choice;
 while(flag){
         cout << "Welcome to the VoleMachine Simulator!" << '\n';
         cout << "Which option would you like to choose?" << '\n';
@@ -27,7 +31,6 @@ while(flag){
         cout << "5. Edit a memory cell" << '\n';
         cout << "6. Exit" << '\n';
         cin >> choice;
-        while(flag) {
             switch(choice) {
                 case 1:
                     handleLoadProgram();
@@ -49,15 +52,17 @@ while(flag){
                     cout << "Exiting the simulator. Goodbye!" << '\n';
                     break;
                 }
-        }
-    cout << "Would you like to load another program or exit? (1 for load, 2 for exit): ";
-    cin >> nextChoice;
-    while(nextChoice != 1 && nextChoice != 2) {
-                cout << "Invalid choice. Please enter 1 to load another program or 2 to exit." << '\n';
-                cin >> nextChoice;
-    }
-    askExitOrLoadAnother(nextChoice);
-    }
- 
+                if(flag) {
+                    cout << "Would you like to load another program or exit? (1 for load, 2 for exit): ";
+                    cin >> nextChoice;
+                    while(nextChoice != 1 && nextChoice != 2) {
+                    cout << "Invalid choice. Please enter 1 to load another program or 2 to exit." << '\n';
+                    cin >> nextChoice;
+                    }
+                flag = askExitOrLoadAnother(nextChoice);
+                }
+        } 
 }
 };
+
+
