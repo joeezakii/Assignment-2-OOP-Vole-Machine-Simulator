@@ -70,12 +70,12 @@ The repository includes pre-configured Vole program examples to demonstrate full
    git clone [https://github.com/joeezakii/Assignment-2-OOP-Vole-Machine-Simulator.git](https://github.com/joeezakii/Assignment-2-OOP-Vole-Machine-Simulator.git)
    cd Assignment-2-OOP-Vole-Machine-Simulator
 
-1. **Compile using PowerShell or Terminal:**
+2. **Compile using PowerShell or Terminal:**
 
 Bash
 g++ -std=c++17 main.cpp vole.cpp memory.cpp Resgisterfile.cpp -o vole_sim
 
-2. **Run the executable:**
+3. **Run the executable:**
 
 Bash
 ./vole.sim
