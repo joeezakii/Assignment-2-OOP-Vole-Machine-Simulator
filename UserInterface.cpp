@@ -1,4 +1,3 @@
-#pragma once
 #include "VoleMachine.h"
 #include "CPU.h"
 #include "UserInterface.h"

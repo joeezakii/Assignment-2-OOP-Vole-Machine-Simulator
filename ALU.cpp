@@ -4,6 +4,8 @@
 #include <bitset>
 #include <cmath>
 #include <algorithm>
+#include <cstdint>
+
 
 int ALU::hexToInt(std::string hex) {
     int value;
@@ -24,7 +26,7 @@ std::string ALU::addTwosComplement(std::string a, std::string b) {
     int valA = hexToInt(a);
     int valB = hexToInt(b);
     int sum = valA + valB;
-    return intTohex(sum);
+    return intToHex(sum);
 }
 
 std::string ALU::bitOr(std::string a, std::string b) {
@@ -53,7 +55,7 @@ std::string ALU::rotateRight(std::string valueStr, int steps) {
 }
 
 std::string ALU::addFloatingPoint(std::string a, std::string b) {
-    auto decodeFloat = [](uint16_t hexVal) -> double {
+    auto decodeFloat = [](unsigned short hexVal) -> double {
         int sign = (hexVal >> 7) & 0x1;
         int exp = (hexVal >> 4) & 0x7;
         int mantissa = hexVal & 0xF;
@@ -62,7 +64,7 @@ std::string ALU::addFloatingPoint(std::string a, std::string b) {
         return sign ? -val : val;
     };
 
-    auto encodeFloat = [](double val) -> uint16_t {
+    auto encodeFloat = [](double val) -> unsigned short {
         if (val == 0) return 0;
         int sign = val < 0 ? 1 : 0;
         val = std::abs(val);
@@ -73,12 +75,11 @@ std::string ALU::addFloatingPoint(std::string a, std::string b) {
         if (mantissa > 15) { mantissa = 15; exp++; }
         return (sign << 7) | ((exp & 0x7) << 4) | (mantissa & 0xF);
     };
-
-    uint16_t valA = hexToInt(a) & 0xFF;
-    uint16_t valB = hexToInt(b) & 0xFF;
+    unsigned short valA = hexToInt(a) & 0xFF;
+    unsigned short valB = hexToInt(b) & 0xFF;
     double decodedA = decodeFloat(valA);
     double decodedB = decodeFloat(valB);
-    double return = decodedA + decodedB;
-    uint16_t encodedRes = encodeFloat(result);
+    double result = decodedA + decodedB;
+    unsigned short encodedRes = encodeFloat(result);
     return intToHex(encodedRes);
 }

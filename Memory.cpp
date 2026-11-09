@@ -2,7 +2,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "memory.h"
+#include "Memory.h"
+
 
 using namespace std;
 
