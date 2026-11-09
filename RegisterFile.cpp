@@ -2,6 +2,5 @@
 #include "Registerfile.h"
 
 RegisterFile::RegisterFile() {
-    registerFile.resize(16, "00");
-    
+    registers.resize(16, "00");
 }
