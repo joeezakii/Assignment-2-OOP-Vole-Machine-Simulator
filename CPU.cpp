@@ -41,3 +41,29 @@ void CPU::fetch(Memory& memory){
     instructionRegister = byte1 + byte2;
     programCounter += 2;
 }
+
+
+
+void CPU::halt() {
+    halted = true;
+}
+
+bool CPU::isHalted() const {
+    return halted;
+}
+
+void CPU::reset() {
+    programCounter = 0;
+    instructionRegister = "0000";
+    halted = false;
+}
+
+bool CPU::step(RegisterFile& regFile, Memory& memory, Screen& screen) {
+    if (halted) return false;
+
+    fetch(memory);
+
+   
+    
+    return !halted;
+}

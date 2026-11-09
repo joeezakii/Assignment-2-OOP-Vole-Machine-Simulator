@@ -12,9 +12,9 @@ using namespace std;
 bool MainMenu::askExitOrLoadAnother(int nextChoice_param) {
         if(nextChoice_param == 1) {
             handleLoadProgram();
+            return true;
         } else if(nextChoice_param == 2) {
-            cout << "Exiting the simulator. Goodbye!" << '\n';
-            return false;
+            return true;
         }
         return true;
 };
