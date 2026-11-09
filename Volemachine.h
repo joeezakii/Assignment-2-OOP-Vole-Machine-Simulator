@@ -29,4 +29,15 @@ public:
 
     void reset();
 
+    Memory& getMemory();
+
+    RegisterFile& getRegisterFile();
+
+    Screen& getScreen();
+
+    int getPC();
+
+    string getIR();
+    
+
 };

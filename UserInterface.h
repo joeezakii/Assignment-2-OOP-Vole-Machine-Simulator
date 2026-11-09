@@ -4,8 +4,8 @@
 #include <string>
 class ConsoleView {
     public:
-    void displayMemory(Memory& memory);
-    void displayRegisters(RegisterFile& regFile);
+    void displayMemory(Memory memory);
+    void displayRegisters(RegisterFile regFile);
     void displayCPUState(int pc, std::string ir);
     void displayScreen(Screen& screen);
     void displayMachine(VoleMachine& machine);

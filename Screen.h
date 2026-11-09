@@ -4,7 +4,7 @@ class Screen {
     private:
     std::string displayBuffer;
     public:
-        void write(std:: string& value);
+        void write(const std::string& value);
         std::string getOutput();
         void clear();
 };

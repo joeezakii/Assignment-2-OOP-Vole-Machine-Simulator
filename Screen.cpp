@@ -1,7 +1,7 @@
 #include "Screen.h"
 #include <iostream>
 #include <string>
-void Screen::write(std::string& value) {
+void Screen::write(const std::string& value) {
     Screen::displayBuffer += value;
 };
 std::string Screen::getOutput() {
