@@ -65,7 +65,7 @@ StoreMem::StoreMem(int r, int addr) {
 void StoreMem::execute(CPU& cpu, Memory& memory, RegisterFile& regFile, Screen& screen) {
     std::string regValue = regFile.getRegister(reg);
     std::stringstream ss;
-    ss << std::hex << memAddress;
+    ss << std::uppercase << std::hex << memAddress;
     std::string memAddressHex = ss.str();
     if(memAddressHex == "FF") {
         screen.write(regValue); 
