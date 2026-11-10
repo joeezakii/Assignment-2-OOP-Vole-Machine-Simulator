@@ -12,6 +12,6 @@ class Memory {
     string getCell(string address);
     void setCell(string address, string value);
     void clear();
-    void size();
+    int size() const;
 
 };

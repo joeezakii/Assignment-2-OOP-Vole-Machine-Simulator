@@ -31,6 +31,6 @@ void Memory::clear() {
     fill(cells->begin(), cells->end(), "00");
 }
 
-void Memory::size() {
-
+int Memory::size() const {
+    return cells->size();
 }
