@@ -51,15 +51,30 @@ bool ProgramLoader::loadIntoMemory(std::vector<std::string> program, std::string
         return false;
     }
     int startIndex = std::stoi(startAddress, nullptr, 16);
-    if (startIndex + program.size() > 256) {
+    
+    if (startIndex + (program.size() * 2) > 256) {
         return false;
     }
+
+    int currentIdx = startIndex;
     for (size_t i = 0; i < program.size(); ++i) {
-        std::stringstream addrStream;
-        addrStream << std::uppercase << std::hex << (startIndex + i);
-        std::string currentAddr = addrStream.str();
-        if (currentAddr.length() == 1) currentAddr = "0" + currentAddr;
-        memory.setCell(currentAddr, program[i]);
+        std::string inst = program[i];
+        std::string byte1 = inst.substr(0, 2); 
+        std::string byte2 = inst.substr(2, 2); 
+
+        std::stringstream ss1;
+        ss1 << std::uppercase << std::hex << currentIdx;
+        std::string addr1 = ss1.str();
+        if (addr1.length() == 1) addr1 = "0" + addr1;
+        memory.setCell(addr1, byte1);
+
+        std::stringstream ss2;
+        ss2 << std::uppercase << std::hex << (currentIdx + 1);
+        std::string addr2 = ss2.str();
+        if (addr2.length() == 1) addr2 = "0" + addr2;
+        memory.setCell(addr2, byte2);
+
+        currentIdx += 2;
     }
     return true;
 }
