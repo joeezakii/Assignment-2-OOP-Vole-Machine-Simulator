@@ -1,3 +1,4 @@
+#include <limits>
 #include "VoleMachine.h"
 #include "CPU.h"
 #include "UserInterface.h"
@@ -72,10 +73,11 @@ void MainMenu::handleLoadProgram() {
 
 
 void MainMenu::run() {
-bool flag = true;
-int nextChoice;
-int choice;
-while(flag){
+    bool flag = true;
+    int nextChoice;
+    int choice;
+
+    while (flag) {
         cout << "Welcome to the VoleMachine Simulator!" << '\n';
         cout << "Which option would you like to choose?" << '\n';
         cout << "1. Load a program" << '\n';
@@ -84,40 +86,50 @@ while(flag){
         cout << "4. Edit a register" << '\n';
         cout << "5. Edit a memory cell" << '\n';
         cout << "6. Exit" << '\n';
-        cin >> choice;
-            switch(choice) {
-                case 1:
-                    handleLoadProgram();
-                    break;
-                case 2:
-                    handleRunStepByStep();
-                    break;
-                case 3:
-                    handleRunAtOnce();
-                    break;
-                case 4:
-                    handleEditRegister();
-                    break;
-                case 5:
-                    handleEditMemoryCell();
-                    break;
-                case 6: {
-                    flag = false;
-                    cout << "Exiting the simulator. Goodbye!" << '\n';
-                    break;
-                }
+
+        while (!(cin >> choice) || choice < 1 || choice > 6) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Invalid choice. Please enter a number between 1 and 6: ";
+        }
+
+        switch (choice) {
+            case 1:
+                handleLoadProgram();
+                break;
+            case 2:
+                handleRunStepByStep();
+                break;
+            case 3:
+                handleRunAtOnce();
+                break;
+            case 4:
+                handleEditRegister();
+                break;
+            case 5:
+                handleEditMemoryCell();
+                break;
+            case 6: {
+                flag = false;
+                cout << "Exiting the simulator. Goodbye!" << '\n';
+                break;
+            }
         } 
-         if(flag) {
-                    cout << "Would you like to load another program or exit? (1 for load, 2 for exit): ";
-                    cin >> nextChoice;
-                    while(nextChoice != 1 && nextChoice != 2) {
-                    cout << "Invalid choice. Please enter 1 to load another program or 2 to exit." << '\n';
-                    cin >> nextChoice;
-                    }
-                flag = askExitOrLoadAnother(nextChoice);
-                }
+
+        if (flag) {
+            cout << "Would you like to load another program or exit? (1 for load, 2 for exit): ";
+            
+            while (!(cin >> nextChoice) || (nextChoice != 1 && nextChoice != 2)) {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "Invalid choice. Please enter 1 to load another program or 2 to exit: ";
+            }
+
+            flag = askExitOrLoadAnother(nextChoice);
+        }
+    }
 }
-};
+
 void ConsoleView::displayMemory(Memory memory) {
     cout << "Memory Contents:" << endl;
     for (int i = 0; i < 16; ++i) {
