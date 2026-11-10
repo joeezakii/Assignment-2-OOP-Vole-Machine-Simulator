@@ -9,6 +9,7 @@
 using namespace std;
 
  bool VoleMachine::loadProgram(string filename, string startAddress) {
+    reset();
     std::vector<std::string> program = loader.readProgramFile(filename);
     return loader.loadIntoMemory(program, startAddress, memory);
     }

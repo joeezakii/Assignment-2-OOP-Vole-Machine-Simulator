@@ -16,17 +16,19 @@ Add::Add(int dest, int r1, int r2){
 
 //Execute Fun
 void Add::execute(CPU& cpu, Memory& memory, RegisterFile& regFile, Screen& screen){
-
     std::string val1Str = regFile.getRegister(reg1);
     std::string val2Str = regFile.getRegister(reg2);
 
     int num1 = std::stoi(val1Str, nullptr, 16);
     int num2 = std::stoi(val2Str, nullptr, 16);
     int sum = num1 + num2;
+    
     std::stringstream ss;
-    ss << std::hex << sum;
+    ss << std::uppercase << std::hex << (sum & 0xFF);
     std::string resultHex = ss.str();
-
+    if (resultHex.length() < 2) {
+        resultHex = "0" + resultHex;
+    }
 
     regFile.setRegister(destReg, resultHex);
 }
