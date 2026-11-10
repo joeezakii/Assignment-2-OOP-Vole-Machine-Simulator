@@ -57,16 +57,26 @@ void LoadImm::execute(CPU& cpu, Memory& memory, RegisterFile& regFile, Screen& s
     regFile.setRegister(reg, value);
 } 
 
+StoreMem::StoreMem(int r, int addr) {
+    reg = r;
+    memAddress = addr;
+}
+
 void StoreMem::execute(CPU& cpu, Memory& memory, RegisterFile& regFile, Screen& screen) {
     std::string regValue = regFile.getRegister(reg);
     std::stringstream ss;
     ss << std::hex << memAddress;
     std::string memAddressHex = ss.str();
     if(memAddressHex == "FF") {
-        screen.write(regValue); // is the hexString condition done? 
+        screen.write(regValue); 
     }
     memory.setCell(memAddressHex, regValue);
 } 
+
+Move::Move(int dest, int src) {
+    destReg = dest;
+    srcReg = src;
+}
 
 void Move::execute(CPU& cpu, Memory& memory, RegisterFile& regFile, Screen& screen) {
     std::string srcValue = regFile.getRegister(srcReg);
