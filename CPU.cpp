@@ -1,6 +1,8 @@
 #include "CPU.h"
 #include "Instruction.h"
 #include "Memory.h"
+#include "RegisterFile.h"
+#include "Screen.h"
 #include <sstream>
 #include <iomanip>
 
@@ -63,6 +65,69 @@ bool CPU::step(RegisterFile& regFile, Memory& memory, Screen& screen) {
 
     fetch(memory);
 
+    if (programCounter >= 256) {
+        halted = true;
+        return false;
+    }
+
+    std::string ir = getIR();
+    if (ir.length() < 4) return !halted;
+
+    // 2. Decode instruction opcode and operands
+    int opcode = std::stoi(ir.substr(0, 1), nullptr, 16);
+    int r = std::stoi(ir.substr(1, 1), nullptr, 16);
+    int x = std::stoi(ir.substr(2, 1), nullptr, 16);
+    int y = std::stoi(ir.substr(3, 1), nullptr, 16);
+    int xy = std::stoi(ir.substr(2, 2), nullptr, 16);
+
+    Instruction* currentInstruction = nullptr;
+
+    switch (opcode) {
+        case 1: 
+            currentInstruction = new LoadImm(r, memory.getCell(ir.substr(2, 2)));
+            break;
+        case 2: 
+            currentInstruction = new LoadImm(r, ir.substr(2, 2));
+            break;
+        case 3: 
+            currentInstruction = new StoreMem(r, xy);
+            break;
+        case 4: 
+            currentInstruction = new Move(x, y);
+            break;
+        case 5: 
+            currentInstruction = new Add(r, x, y);
+            break;
+        case 6: 
+            currentInstruction = new AddFloat(r, x, y); 
+            break;
+        case 7: 
+            currentInstruction = new Or(r, x, y);
+            break;
+        case 8: 
+            currentInstruction = new And(r, x, y);
+            break;
+        case 9: 
+            currentInstruction = new Xor(r, x, y);
+            break;
+        case 0xA: 
+            currentInstruction = new Rotate(r, y);
+            break;
+        case 0xB: 
+            currentInstruction = new Jump(r, xy);
+            break;
+        case 0xC: 
+            currentInstruction = new Halt();
+            break;
+        default:
+            break;
+    }
+
+    
+    if (currentInstruction != nullptr) {
+        currentInstruction->execute(*this, memory, regFile, screen);
+        delete currentInstruction;
+    }
    
     
     return !halted;

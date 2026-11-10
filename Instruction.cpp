@@ -3,6 +3,7 @@
 #include "Instruction.h"
 #include "RegisterFile.h"
 #include "Memory.h"
+#include "ALU.h"
 #include <sstream>
 #include <string>
 
@@ -30,6 +31,22 @@ void Add::execute(CPU& cpu, Memory& memory, RegisterFile& regFile, Screen& scree
     regFile.setRegister(destReg, resultHex);
 }
 
+AddFloat::AddFloat(int dest, int r1, int r2) {
+    destReg = dest;
+    reg1 = r1;
+    reg2 = r2;
+}
+
+void AddFloat::execute(CPU& cpu, Memory& memory, RegisterFile& regFile, Screen& screen) {
+    std::string val1Str = regFile.getRegister(reg1);
+    std::string val2Str = regFile.getRegister(reg2);
+
+    ALU alu;
+
+    std::string resultHex = alu.addFloatingPoint(val1Str, val2Str);
+
+    regFile.setRegister(destReg, resultHex);
+}
 
 LoadImm::LoadImm(int r, const std::string& val) {
     reg = r;

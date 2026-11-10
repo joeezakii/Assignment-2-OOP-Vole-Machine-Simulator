@@ -2,13 +2,18 @@
 #include <fstream>
 #include <sstream>
 #include <regex>
+#include <iostream> 
 
 std::vector<std::string> ProgramLoader::readProgramFile(std::string filename) {
     std::vector<std::string> instructions;
     std::ifstream file(filename);
+    
+    
     if (!file.is_open()) {
-        return instructions;
-    }
+        std::cout << "Error: Could not open " << filename << ". Check the file path!\n";
+        return instructions; 
+    }   
+    
     std::string line;
     while (std::getline(file, line)) {
         size_t commentPos = line.find("//");
